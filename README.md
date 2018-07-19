@@ -2,7 +2,7 @@
 
 点击右上角的fork按钮fork老师的代码到自己的Git中：
 
-![2](/Users/burning/Desktop/training/helpImg/2.png)
+![2](./helpImg/2.png)
 
 
 
@@ -14,7 +14,7 @@ fork之后，打开自己的profile页，进入刚刚fork过来的项目。
 
 仓库地址的查看：绿色的clone or download按钮点击后可查看
 
-![1](/Users/burning/Desktop/training/helpImg/1.png)
+![1](./helpImg/1.png)
 
 
 
