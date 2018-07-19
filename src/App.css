@@ -60,7 +60,8 @@ h2 {
   bottom: 0;
   display: flex;
   width: 100%;
-  border-top: 1px solid #eee; 
+  background-color: #fff;
+  border-top: 1px solid #eee;
 }
 .chat-nav__item {
   flex: 1;
