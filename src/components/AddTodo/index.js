@@ -12,7 +12,6 @@ export default class AddTodo extends React.Component {
   }
 
   handleInputChange = e => {
-    this.inputValue = e.target.value;
     this.setState({ inputValue: e.target.value });
   }
 
@@ -24,7 +23,10 @@ export default class AddTodo extends React.Component {
 
   handleSubmit = () => {
     const { onAddTodo } = this.props;
-    onAddTodo(this.inputValue);
+    if (!this.state.inputValue) {
+      return;
+    }
+    onAddTodo(this.state.inputValue);
 
     this.setState({ inputValue: '' });
   }
