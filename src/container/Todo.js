@@ -2,8 +2,10 @@ import React from 'react';
 import AddTodo from '../components/AddTodo';
 import TodoList from '../components/TodoList';
 import Filter from '../components/Filter';
+import { connect } from 'react-redux'
+import { addTodo as AddTodoCreator } from '../actions'
 
-export default class Todo extends React.Component {
+class Todo extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -24,14 +26,17 @@ export default class Todo extends React.Component {
   }
 
   handleAddTodo = txt => {
-    const newList = this.state.todoList.slice();
-    newList.unshift({
-      txt: txt,
-      isCompleted: false
-    })
-    this.setState({
-      todoList: newList
-    });
+    const { dispatch } = this.props;
+    const action = AddTodoCreator(txt);
+    dispatch(action);
+    // const newList = this.state.todoList.slice();
+    // newList.unshift({
+    //   txt: txt,
+    //   isCompleted: false
+    // })
+    // this.setState({
+    //   todoList: newList
+    // });
   }
 
   handleTodoItemClick = (item, idx) => {
@@ -49,13 +54,14 @@ export default class Todo extends React.Component {
   }
 
   render() {
+    const { dispatch } = this.props;
     const list = this.state.filterCompleted
-      ? this.getFilterList(this.state.todoList)
-      : this.state.todoList;
+      ? this.getFilterList(this.props.list)
+      : this.props.list;
     return (
       <div className="todo-ctn">
-        <AddTodo onAddTodo={this.handleAddTodo} />
-        <TodoList list={list} onTodoItemClick={this.handleTodoItemClick} />
+        <AddTodo dispatch={dispatch} />
+        <TodoList list={list} dispatch={dispatch}/>
         <Filter
           filterCompleted={this.state.filterCompleted}
           onFilterCompletedClick={this.handleFilterCompletedClick}
@@ -64,3 +70,12 @@ export default class Todo extends React.Component {
     );
   }
 }
+
+function mapStateToProps(state,ownProps){
+  // state.list;
+  const props = { list:null };
+  props.list = state.list;
+  return props;
+}
+
+export default connect(mapStateToProps)(Todo);

@@ -1,5 +1,6 @@
 import React from 'react';
 import './AddTodo.css';
+import { addTodo } from '../../actions'
 
 const KEY_RETURN = 13;
 
@@ -22,12 +23,13 @@ export default class AddTodo extends React.Component {
   }
 
   handleSubmit = () => {
-    const { onAddTodo } = this.props;
     if (!this.state.inputValue) {
       return;
     }
-    onAddTodo(this.state.inputValue);
-
+    const { dispatch } = this.props;
+    const action = addTodo(this.state.inputValue);
+    dispatch(action);
+    
     this.setState({ inputValue: '' });
   }
 
