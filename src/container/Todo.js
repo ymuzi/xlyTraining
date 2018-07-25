@@ -2,8 +2,9 @@ import React from 'react';
 import AddTodo from '../components/AddTodo';
 import TodoList from '../components/TodoList';
 import Filter from '../components/Filter';
+import { connect } from 'react-redux';
 
-export default class Todo extends React.Component {
+class Todo extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -23,23 +24,13 @@ export default class Todo extends React.Component {
     return list.filter(item => item.isCompleted)
   }
 
-  handleAddTodo = txt => {
-    const newList = this.state.todoList.slice();
-    newList.unshift({
-      txt: txt,
-      isCompleted: false
-    })
-    this.setState({
-      todoList: newList
-    });
-  }
 
   handleTodoItemClick = (item, idx) => {
-    const newTodoList = this.state.todoList.slice();
-    newTodoList[idx].isCompleted = !newTodoList[idx].isCompleted;
-    this.setState({
-      todoList: newTodoList
-    });
+    // const newTodoList = this.state.todoList.slice();
+    // newTodoList[idx].isCompleted = !newTodoList[idx].isCompleted;
+    // this.setState({
+    //   todoList: newTodoList
+    // });
   }
 
   handleFilterCompletedClick = () => {
@@ -50,11 +41,11 @@ export default class Todo extends React.Component {
 
   render() {
     const list = this.state.filterCompleted
-      ? this.getFilterList(this.state.todoList)
-      : this.state.todoList;
+      ? this.getFilterList(this.props.list)
+      : this.props.list;
     return (
       <div className="todo-ctn">
-        <AddTodo onAddTodo={this.handleAddTodo} />
+        <AddTodo dispatch={this.props.dispatch} />
         <TodoList list={list} onTodoItemClick={this.handleTodoItemClick} />
         <Filter
           filterCompleted={this.state.filterCompleted}
@@ -64,3 +55,10 @@ export default class Todo extends React.Component {
     );
   }
 }
+
+
+function mapStateToProps(state,ownProps){
+  return {list: state.list};
+}
+
+export default connect(mapStateToProps)(Todo);

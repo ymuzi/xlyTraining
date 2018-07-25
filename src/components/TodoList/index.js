@@ -16,14 +16,14 @@ export default class TodoList extends React.Component {
           <div className="check-wrap check-completed">
             <img className="check-icon" src={checkIcon} />
           </div>
-          <div className="todo-txt txt-completed">{item.txt}</div>
+          <div className="todo-txt txt-completed">{item.text}</div>
         </div>
       );
     }
     return (
       <div key={idx} className="item-ctn" onClick={() => this.handleComplete(item, idx)}>
         <div className="check-wrap" />
-        <div className="todo-txt">{item.txt}</div>
+        <div className="todo-txt">{item.text}</div>
       </div>
     );
   }
