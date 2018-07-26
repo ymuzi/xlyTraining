@@ -7,13 +7,11 @@ const KEY_RETURN = 13;
 export default class AddTodo extends React.Component {
   constructor() {
     super();
-    this.state = {
-      inputValue: ''
-    };
+    this.inputValue = '';
   }
 
   handleInputChange = e => {
-    this.setState({ inputValue: e.target.value });
+    this.inputValue = e.target.value;
   }
 
   listenReturnKeyDown = e => {
@@ -23,14 +21,13 @@ export default class AddTodo extends React.Component {
   }
 
   handleSubmit = () => {
-    if (!this.state.inputValue) {
+    if (!this.inputValue) {
       return;
     }
-    const { dispatch } = this.props;
-    const action = addTodo(this.state.inputValue);
-    dispatch(action);
+    const { todoActions } = this.props;
+    todoActions.addTodo((new Date()).getTime() ,this.inputValue);
     
-    this.setState({ inputValue: '' });
+    this.inputValue = '';
   }
 
   render() {
@@ -39,7 +36,6 @@ export default class AddTodo extends React.Component {
         <div className="add-input-ctn">
           <input
             className="add-input"
-            value={this.state.inputValue}
             placeholder="写下你的Todo后，按回车键添加"
             onChange={this.handleInputChange}
             onKeyDown={this.listenReturnKeyDown}

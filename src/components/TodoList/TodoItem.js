@@ -1,14 +1,13 @@
 import React from 'react';
 import './TodoList.css';
 import checkIcon from '../../resource/check.png';
-import { changeStatus } from '../../actions'
 
 export default class TotoItem extends React.Component
 {
 
   handleComplete = () => {
-    const { dispatch,item,idx } = this.props;
-    dispatch(changeStatus(idx, !item.isCompleted));
+    const { todoActions, item } = this.props;
+    todoActions.changeStatus(item);
   }
 
   render(){
