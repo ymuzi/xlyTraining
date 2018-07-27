@@ -25,7 +25,7 @@ export default class AddTodo extends React.Component {
       return;
     }
     const { todoActions } = this.props;
-    todoActions.addTodo((new Date()).getTime() ,this.inputValue);
+    todoActions.addTodo(this.inputValue);
     
     this.inputValue = '';
   }

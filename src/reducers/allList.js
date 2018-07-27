@@ -1,25 +1,47 @@
 import * as ActionTypes from '../const/ActionTypes'
 
-const init_state = { list: [
+const init_state = { 
+  list: [
   {id: 1,text:'123',isCompleted: false},
   {id: 2,text:'456',isCompleted: false},
   {id: 3,text:'789',isCompleted: true}
-] }
+  ],
+  isFetching: false,
+  errorMessage: null,
+}
 
 export default function allList(state = init_state, action){
   switch(action.type){
-    case ActionTypes.ADD_TODO:{
-      const { id, text } = action;
+    case `${ActionTypes.ADD_TODO}_REQ`: {
       const newState = {...state};
-      const newList = [...newState.list];
-      newList.unshift({
-        id,
-        text,
-        isCompleted: false
-      });
-      newState.list = newList;
+      newState.isFetching = true;
+      newState.errorMessage = null;
       return newState;
     }
+    case `${ActionTypes.ADD_TODO}_SUC`:{
+      const { response } = action;
+      const { id, text, isCompleted} = response;
+      if( id && text && isCompleted !== null && typeof(isCompleted) !== 'undefined'){
+        const newState = {...state};
+        const newList = [...newState.list];
+        newList.unshift({
+          id,
+          text,
+          isCompleted
+        });
+        newState.list = newList;
+        newState.isFetching = false;
+        return newState;
+      }
+      return state;
+    }
+    case `${ActionTypes.ADD_TODO}_FAI`: {
+      const newState = { ...state };
+      newState.isFetching = false;
+      newState.errorMessage = action.message
+      return newState;
+    }
+
     case ActionTypes.CHANGE_TODO_STATUS: {
       const { item } = action;
       const newState = {...state};

@@ -1,10 +1,12 @@
 import { ADD_TODO, CHANGE_TODO_STATUS } from '../const/ActionTypes'
 
-export function addTodo(id,text){
+export function addTodo(text){
   return {
     type: ADD_TODO,
-    id,
-    text
+    API: {
+      params: { text },
+      endPoint: 'test'
+    }
   }
 }
 

@@ -15,11 +15,27 @@ class Todo extends React.Component {
     return list.filter(item => item.isCompleted)
   }
 
+  renderRequestWaiting(){
+    const { allList } = this.props;
+    if(allList.isFetching){
+      return <div >网络请求中</div>
+    }
+  }
+
+  renderErrorMessage(){
+    const { allList } = this.props;
+    if(allList.errorMessage){
+      return <div>{allList.errorMessage}</div>
+    }
+  }
+
   render() {
     const { todoActions } = this.props;
     const { allList, compList } = this.props;
     return (
       <div className="todo-ctn">
+        { this.renderRequestWaiting() }
+        { this.renderErrorMessage() }
         <AddTodo todoActions={todoActions} />
         <TodoList list={allList.list} todoActions={todoActions}/>
         <hr />
